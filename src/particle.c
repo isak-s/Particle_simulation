@@ -5,6 +5,7 @@ Particle new_particle(double x, double y, Color c) {
     p.x = x;
     p.y = y;
     p.color = c;
+    p.weight = 10;
 
     return p;
 }

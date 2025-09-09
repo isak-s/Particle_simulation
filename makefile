@@ -7,7 +7,7 @@ TEST_COLOR = test_color
 TEST_PARTICLE = test_particle
 
 # src files
-SRC = src/main.c src/particle.c src/color.c src/particlesystem.c
+SRC = src/main.c src/particle.c src/color.c src/particlesystem.c src/image.c
 
 all:
 	gcc $(CFLAGS) $(SRC) -o main

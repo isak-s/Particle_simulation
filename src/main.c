@@ -1,6 +1,7 @@
 #include "particle.h"
 #include "color.h"
 #include "particlesystem.h"
+#include "image.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -30,19 +31,29 @@ void write_gradient_to_file(char* filename, int width, int height) {
    free(image);
 }
 
+Color* new_blank_image(int width, int height) {
+    return malloc(width * height * sizeof(Color));
+}
+
 int main() {
 
-    write_gradient_to_file("images/grad.ppm", 256, 256);
+    // write_gradient_to_file("images/grad.ppm", 256, 256);
+    Image img = new_image(255, 255);
+    Particlesystem* ps = new_particlesystem();
 
-    Particlesystem* ps = malloc(sizeof(Particlesystem));
-
-    Color c = new_color(255, 255, 255);
+    Color c = new_color(255, 0, 0);
     Particle p = new_particle(1, 2, c);
 
     add_particle(ps, p);
+    draw_particle(p, img);
+    write_bitmap_to_file("images/singleP.ppm", img.pixels, img.width, img.height);
+
 
     printf("particle at (%f, %f), color = (%d, %d, %d)\n",
            p.x, p.y, c.r, c.g, c.b);
 
-    free(ps);
+    free_particlesystem(ps);
+    free_image(img);
+
+    return 0;
 }

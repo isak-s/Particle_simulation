@@ -7,6 +7,8 @@ typedef struct Particle {
     double x;
     double y;
 
+    double weight;
+
     Color color;
 } Particle;
 

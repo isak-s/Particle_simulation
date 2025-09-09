@@ -1,4 +1,7 @@
+#ifndef PARTICLESYSTEM_H
+#define PARTICLESYSTEM_H
 #include "particle.h"
+#include "image.h"
 
 typedef struct ParticleNode {
     Particle p;
@@ -12,4 +15,11 @@ typedef struct Particlesystem
 
 } Particlesystem;
 
+Particlesystem* new_particlesystem();
+
 void add_particle(Particlesystem* ps, Particle p);
+
+void free_particlesystem(Particlesystem* ps);
+
+void draw_particle(Particle p, Image img);
+#endif
