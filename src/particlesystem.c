@@ -21,6 +21,7 @@ void add_particle(Particlesystem* ps, Particle p) {
         return;
     }
     ps->lastP->next = pn;
+    ps->lastP = pn;
 }
 
 void free_particlesystem(Particlesystem* ps) {
@@ -37,3 +38,5 @@ void free_particlesystem(Particlesystem* ps) {
 void draw_particle(Particle p, Image img) {
     img.pixels[((int) p.y) * img.width + (int)p.x] = p.color;
 }
+
+
