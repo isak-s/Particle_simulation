@@ -39,4 +39,11 @@ void draw_particle(Particle p, Image img) {
     img.pixels[((int) p.y) * img.width + (int)p.x] = p.color;
 }
 
+void draw_particles(Particlesystem ps, Image img) {
+    ParticleNode* curr = ps.firstP;
 
+    while (curr != NULL) {
+        draw_particle(curr->p, img);
+        curr = curr->next;
+    }
+}

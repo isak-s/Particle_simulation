@@ -22,10 +22,10 @@ test_particle:
 	./$(TEST_PARTICLE)
 
 test_particlesystem:
-	gcc $(TESTCFLAGS) tests/test_particlesystem.c src/particlesystem.c src/color.c src/particle.c third_party/unity/src/unity.c -o $(TEST_PARTICLESYSTEM)
+	gcc $(TESTCFLAGS) tests/test_particlesystem.c src/particlesystem.c src/color.c src/particle.c src/image.c third_party/unity/src/unity.c -o $(TEST_PARTICLESYSTEM)
 	./$(TEST_PARTICLESYSTEM)
 
-test_all: test_particle test_color test_particlesystem
+test_all: clean test_particle test_color test_particlesystem
 
 clean:
 	rm -f $(MAIN) $(TEST_COLOR) $(TEST_PARTICLE) $(TEST_PARTICLESYSTEM)
