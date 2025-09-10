@@ -22,4 +22,7 @@ void add_particle(Particlesystem* ps, Particle p);
 void free_particlesystem(Particlesystem* ps);
 
 void draw_particle(Particle p, Image img);
+
+void tick(Particlesystem ps, Image img);
+
 #endif

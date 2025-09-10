@@ -30,9 +30,10 @@ Vec2 normalized_vec2(Vec2 v) {
 }
 
 double magnitude_gravitational_force_between(Particle p1, Particle p2) {
-    // if distance between is 0!!!!!!
+    double d = distance_between(p1, p2);
+    if (d < 0.000001) {return 1;}
     return (G * p1.mass * p2.mass) /
-            pow(distance_between(p1, p2) * METERS_PER_PIXEL, 2);
+            pow(d * METERS_PER_PIXEL, 2);
 }
 
 Vec2 gravitational_force_between(Particle p1, Particle p2) {

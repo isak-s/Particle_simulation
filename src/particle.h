@@ -11,7 +11,6 @@ typedef struct Particle {
     double mass; // in kg
     Color color;
 
-
 } Particle;
 
 typedef struct {

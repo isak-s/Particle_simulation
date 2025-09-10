@@ -3,6 +3,7 @@
 
 #include "color.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 typedef struct Image {
     Color* pixels;
@@ -11,5 +12,8 @@ typedef struct Image {
 } Image;
 
 Image new_image(int width, int height);
-void free_image();
+
+void write_to_file(FILE* file, Image img);
+
+void free_image(Image img);
 #endif
