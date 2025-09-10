@@ -1,5 +1,5 @@
 CFLAGS = -I src -Wall -Wextra -std=c11
-TESTCFLAGS = -I src -I third_party/unity/src -Wall -Wextra -std=c11 -DUNITY_OUTPUT_COLOR
+TESTCFLAGS = -I src -I third_party/unity/src -Wall -Wextra -std=c11 -DUNITY_OUTPUT_COLOR -DUNITY_INCLUDE_DOUBLE -DUNITY_DOUBLE_TYPE=double
 
 #EXECUTABLES
 MAIN = main
@@ -11,18 +11,18 @@ TEST_PARTICLESYSTEM = test_particlesystem
 SRC = src/main.c src/particle.c src/color.c src/particlesystem.c src/image.c
 
 all:
-	gcc $(CFLAGS) $(SRC) -o main
+	gcc $(CFLAGS) $(SRC) -o main -lm
 
 test_color:
-	gcc $(TESTCFLAGS) tests/test_color.c src/color.c third_party/unity/src/unity.c -o $(TEST_COLOR)
+	gcc $(TESTCFLAGS) tests/test_color.c src/color.c third_party/unity/src/unity.c -o $(TEST_COLOR) -lm
 	./$(TEST_COLOR)
 
 test_particle:
-	gcc $(TESTCFLAGS) tests/test_particle.c src/color.c src/particle.c third_party/unity/src/unity.c -o $(TEST_PARTICLE)
+	gcc $(TESTCFLAGS) tests/test_particle.c src/color.c src/particle.c third_party/unity/src/unity.c -o $(TEST_PARTICLE) -lm
 	./$(TEST_PARTICLE)
 
 test_particlesystem:
-	gcc $(TESTCFLAGS) tests/test_particlesystem.c src/particlesystem.c src/color.c src/particle.c src/image.c third_party/unity/src/unity.c -o $(TEST_PARTICLESYSTEM)
+	gcc $(TESTCFLAGS) tests/test_particlesystem.c src/particlesystem.c src/color.c src/particle.c src/image.c third_party/unity/src/unity.c -o $(TEST_PARTICLESYSTEM) -lm
 	./$(TEST_PARTICLESYSTEM)
 
 test_all: clean test_particle test_color test_particlesystem

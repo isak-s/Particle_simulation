@@ -1,11 +1,49 @@
 #include "particle.h"
+#include <math.h>
+
+#define G 6.67430e-11
+#define METERS_PER_PIXEL 1.0
 
 Particle new_particle(double x, double y, Color c) {
     Particle p;
     p.x = x;
     p.y = y;
     p.color = c;
-    p.weight = 10;
-
+    p.mass = 10;
+    p.velocity_x = 0;
+    p.velocity_y = 0;
     return p;
+}
+
+
+double distance_between(Particle p1, Particle p2) {
+    return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2));
+}
+
+Vec2 normalized_vec2(Vec2 v) {
+    Vec2 newV;
+    double len = sqrt(pow(v.x, 2) + pow(v.y, 2));
+    newV.x = v.x / len;
+    newV.y = v.y / len;
+
+    return newV;
+}
+
+double magnitude_gravitational_force_between(Particle p1, Particle p2) {
+    // if distance between is 0!!!!!!
+    return (G * p1.mass * p2.mass) /
+            pow(distance_between(p1, p2) * METERS_PER_PIXEL, 2);
+}
+
+Vec2 gravitational_force_between(Particle p1, Particle p2) {
+    Vec2 v;
+    v.x = p2.x - p1.x;
+    v.y = p2.y - p1.y;
+    Vec2 nv = normalized_vec2(v);
+    double f = magnitude_gravitational_force_between(p1, p2);
+    nv.x *= f;
+    nv.y *= f;
+
+    return nv;
+
 }

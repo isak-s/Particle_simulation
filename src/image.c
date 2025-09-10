@@ -1,4 +1,7 @@
 #include "image.h"
+#include <stdio.h>
+
+// FILE* ffmpeg = popen("ffmpeg -f rawvideo -pixel_format rgb24 -video_size 640x480 -framerate 30 -i - -c:v libx264 -pix_fmt yuv420p out.mp4", "w");
 
 Image new_image(int width, int height) {
     Image img;
