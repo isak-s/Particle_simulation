@@ -12,20 +12,22 @@ int main() {
     Particlesystem* ps = new_particlesystem();
 
     Color c = new_color(255, 0, 0);
-    Particle p = new_particle(1, 2, c);
+    Color c2 = new_color(0, 255, 0);
+    Color c3 = new_color(0, 0, 255);
+
+    Particle p = new_particle(100, 100, c);
+    Particle p2 = new_particle(150, 100, c2);
+    Particle p3 = new_particle(100, 150, c3);
 
     add_particle(ps, p);
+    add_particle(ps, p2);
+    add_particle(ps, p3);
 
-    for (int i = 0; i < 10; i++) {
-        draw_particle(p, img);
-        p.x += 1;
-        p.y += 1;
+    for (int i = 0; i < 100; i++) {
+        tick(ps, img);
     }
 
-    write_to_file(fopen("images/movedP.ppm", "wb"), img);
-
-    printf("particle at (%f, %f), color = (%d, %d, %d)\n",
-           p.x, p.y, c.r, c.g, c.b);
+    write_to_file(fopen("images/multiple.ppm", "wb"), img);
 
     free_particlesystem(ps);
     free_image(img);
