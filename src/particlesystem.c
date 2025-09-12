@@ -37,6 +37,9 @@ void free_particlesystem(Particlesystem* ps) {
 }
 
 void draw_particle(Particle p, Image img) {
+    //if (p.x >= img.width || p.y >= img.height || p.x <= 0 || p.y <= 0) {
+    //    return;
+    //}
     img.pixels[((int) p.y) * img.width + (int)p.x] = p.color;
 }
 
@@ -72,6 +75,9 @@ void update_acceleration(Particlesystem* ps) {
 
             curr->p.acceleration.x += force.x;
             curr->p.acceleration.y += force.y;
+            // signed in the other direction for the actor
+            actor->p.acceleration.x -= force.x;
+            actor->p.acceleration.y -= force.y;
 
             actor = actor->next;
         }
@@ -92,7 +98,7 @@ void apply_acceleration(Particlesystem* ps) {
 void apply_velocity(Particlesystem* ps) {
     // simulate some variable amount of time to apply acceleration and update location of particles.
     // add some randomness??!!
-    double coefficient = 1;
+    double coefficient = 0.1;
     ParticleNode* curr = ps->firstP;
     while (curr != NULL) {
         curr->p.x += coefficient * curr->p.velocity_x;
@@ -101,9 +107,33 @@ void apply_velocity(Particlesystem* ps) {
     }
 }
 
+
+int particle_is_within_image(Particle p, Image img) {
+    return p.x <= img.width && p.x >= 0 && p.y <= img.height && p.y >= 0;
+}
+
+void boundary_check(Particlesystem* ps, Image img) {
+    // if the particle is outside of the image dimensions,
+    // snap it back to the edge and reverse the direction of the velocity.
+
+    ParticleNode* curr = ps->firstP;
+
+    while (curr != NULL) {
+        if (!particle_is_within_image(curr->p, img)) {
+            if (curr->p.x < 0) { curr->p.x = 0; curr->p.velocity_x = -curr->p.velocity_x; }
+            if (curr->p.x >= img.width) { curr->p.x = img.width - 1; curr->p.velocity_x = -curr->p.velocity_x; }
+            if (curr->p.y < 0) { curr->p.y = 0; curr->p.velocity_y = -curr->p.velocity_y; }
+            if (curr->p.y >= img.height) { curr->p.y = img.height - 1; curr->p.velocity_y = -curr->p.velocity_y; }
+        }
+        curr = curr->next;
+    }
+
+}
+
 void tick(Particlesystem* ps, Image img) {
     update_acceleration(ps);
     apply_acceleration(ps);
     apply_velocity(ps);
+    boundary_check(ps, img);
     draw_particles(ps, img);
 }
