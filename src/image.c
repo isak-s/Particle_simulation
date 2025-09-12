@@ -17,6 +17,10 @@ void free_image(Image img) {
 }
 
 void write_to_file(FILE* file, Image img) {
+    fwrite(img.pixels, sizeof(Color), img.width * img.height, file);
+}
+
+void write_to_ppm_file(FILE* file, Image img) {
     fprintf(file, "P6\n%d %d\n255\n", img.width, img.height);
     fwrite(img.pixels, sizeof(Color), img.width * img.height, file);
 }

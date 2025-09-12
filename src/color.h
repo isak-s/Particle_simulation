@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-typedef struct Color {
+typedef struct  __attribute__((__packed__)) {
     uint8_t r;
     uint8_t g;
     uint8_t b;
