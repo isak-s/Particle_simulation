@@ -40,7 +40,7 @@ void draw_particle(Particle p, Image img) {
     //if (p.x >= img.width || p.y >= img.height || p.x <= 0 || p.y <= 0) {
     //    return;
     //}
-    img.pixels[((int) p.y) * img.width + (int)p.x] = p.color;
+    img.pixels[((int) p.pos.y) * img.width + (int)p.pos.x] = p.color;
 }
 
 void draw_particles(Particlesystem* ps, Image img) {
@@ -59,7 +59,7 @@ void update_acceleration(Particlesystem* ps) {
 
     while (curr != NULL) {
         printf("particle at (%f, %f), color = (%d, %d, %d)\n",
-                curr->p.x, curr->p.y, curr->p.color.r, curr->p.color.g, curr->p.color.b);
+                curr->p.pos.x, curr->p.pos.y, curr->p.color.r, curr->p.color.g, curr->p.color.b);
 
         curr->p.acceleration.x = 0;
         curr->p.acceleration.y = 0;
@@ -89,8 +89,8 @@ void apply_acceleration(Particlesystem* ps) {
     // simulate some variable amount of time to apply acceleration and update location of particles.
     ParticleNode* curr = ps->firstP;
     while (curr != NULL) {
-        curr->p.velocity_x += curr->p.acceleration.x;
-        curr->p.velocity_y += curr->p.acceleration.y;
+        curr->p.velocity.x += curr->p.acceleration.x;
+        curr->p.velocity.y += curr->p.acceleration.y;
         curr = curr->next;
     }
 }
@@ -101,15 +101,15 @@ void apply_velocity(Particlesystem* ps) {
     double coefficient = 0.1;
     ParticleNode* curr = ps->firstP;
     while (curr != NULL) {
-        curr->p.x += coefficient * curr->p.velocity_x;
-        curr->p.y += coefficient * curr->p.velocity_y;
+        curr->p.pos.x += coefficient * curr->p.velocity.x;
+        curr->p.pos.y += coefficient * curr->p.velocity.y;
         curr = curr->next;
     }
 }
 
 
 int particle_is_within_image(Particle p, Image img) {
-    return p.x <= img.width && p.x >= 0 && p.y <= img.height && p.y >= 0;
+    return p.pos.x <= img.width && p.pos.x >= 0 && p.pos.y <= img.height && p.pos.y >= 0;
 }
 
 void boundary_check(Particlesystem* ps, Image img) {
@@ -120,10 +120,10 @@ void boundary_check(Particlesystem* ps, Image img) {
 
     while (curr != NULL) {
         if (!particle_is_within_image(curr->p, img)) {
-            if (curr->p.x < 0) { curr->p.x = 0; curr->p.velocity_x = -curr->p.velocity_x; }
-            if (curr->p.x >= img.width) { curr->p.x = img.width - 1; curr->p.velocity_x = -curr->p.velocity_x; }
-            if (curr->p.y < 0) { curr->p.y = 0; curr->p.velocity_y = -curr->p.velocity_y; }
-            if (curr->p.y >= img.height) { curr->p.y = img.height - 1; curr->p.velocity_y = -curr->p.velocity_y; }
+            if (curr->p.pos.x < 0) { curr->p.pos.x = 0; curr->p.velocity.x = -curr->p.velocity.x; }
+            if (curr->p.pos.x >= img.width) { curr->p.pos.x = img.width - 1; curr->p.velocity.x = -curr->p.velocity.x; }
+            if (curr->p.pos.y < 0) { curr->p.pos.y = 0; curr->p.velocity.y = -curr->p.velocity.y; }
+            if (curr->p.pos.y >= img.height) { curr->p.pos.y = img.height - 1; curr->p.velocity.y = -curr->p.velocity.y; }
         }
         curr = curr->next;
     }

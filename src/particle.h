@@ -8,12 +8,8 @@ typedef struct {
 } Vec2;
 
 typedef struct Particle {
-    double x;
-    double y;
-    double velocity_x;
-    double velocity_y;
+    Vec2 pos, velocity, acceleration;
 
-    Vec2 acceleration;
     double mass; // in kg
     Color color;
 

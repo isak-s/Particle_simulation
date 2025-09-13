@@ -8,9 +8,11 @@
 #include <stdlib.h>
 #include <math.h>
 
+// Todo: add black and white holes
+// black hole eats any particles that come close enough and spit them out at the white hole in randomized dir.
+
 int main() {
 
-    Image img = new_image(640, 480);
     Particlesystem* ps = new_particlesystem();
 
     FILE* ffmpeg = popen("ffmpeg -f rawvideo "
@@ -43,6 +45,12 @@ int main() {
     add_particle(ps, p6);
     // Lagrange equilateral configuration
 
+    // int overlapping_frames = 7;
+    int width = 640;
+    int height = 480;
+    Image img = new_image(width, height);
+
+    // populate the image fifoqueue with
     for (int i = 0; i < 660; i++) {
         // img = new_image(255, 255);
         tick(ps, img);

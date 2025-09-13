@@ -6,18 +6,18 @@
 
 Particle new_particle(double x, double y, Color c) {
     Particle p;
-    p.x = x;
-    p.y = y;
+    p.pos.x = x;
+    p.pos.y = y;
     p.color = c;
     p.mass = 1000000;
-    p.velocity_x = 0;
-    p.velocity_y = 0;
+    p.velocity.x = 0;
+    p.velocity.y = 0;
     return p;
 }
 
 
 double distance_between(Particle p1, Particle p2) {
-    return sqrt(pow(p1.x - p2.x, 2) + pow(p1.y - p2.y, 2));
+    return sqrt(pow(p1.pos.x - p2.pos.x, 2) + pow(p1.pos.y - p2.pos.y, 2));
 }
 
 Vec2 normalized_vec2(Vec2 v) {
@@ -38,8 +38,8 @@ double magnitude_gravitational_force_between(Particle p1, Particle p2) {
 
 Vec2 gravitational_force_between(Particle p1, Particle p2) {
     Vec2 v;
-    v.x = p2.x - p1.x;
-    v.y = p2.y - p1.y;
+    v.x = p2.pos.x - p1.pos.x;
+    v.y = p2.pos.y - p1.pos.y;
     Vec2 nv = normalized_vec2(v);
     double f = magnitude_gravitational_force_between(p1, p2);
     nv.x *= f;
