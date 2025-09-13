@@ -100,6 +100,9 @@ void apply_acceleration(Particlesystem* ps) {
     while (curr != NULL) {
         curr->p.velocity.x += curr->p.acceleration.x;
         curr->p.velocity.y += curr->p.acceleration.y;
+
+        clamp_velocity(&curr->p);
+
         curr = curr->next;
     }
 }
@@ -112,6 +115,7 @@ void apply_velocity(Particlesystem* ps) {
     while (curr != NULL) {
         curr->p.pos.x += coefficient * curr->p.velocity.x;
         curr->p.pos.y += coefficient * curr->p.velocity.y;
+        clamp_velocity(&curr->p);
         curr = curr->next;
     }
 }

@@ -1,6 +1,6 @@
 #include "particle.h"
 #include <math.h>
-
+#include "constants.h"
 #define G 6.67430e-11
 #define METERS_PER_PIXEL 1.0
 
@@ -53,4 +53,13 @@ Vec2 gravitational_force_between(Particle p1, Particle p2) {
 void add_curr_pos_to_old_positions(Particle* p) {
     p->old_positions[p->history_index] = p->pos;
     p->history_index = (p->history_index + 1) % NUM_OLD_POSITIONS;
+}
+
+
+void clamp_velocity(Particle* p) {
+    // could apply some breaking force here every tick instead
+    Vec2 norm = normalized_vec2(p->velocity);
+    norm.x *= MAX_VELOCITY;
+    norm.y *= MAX_VELOCITY;
+    p->velocity = norm;
 }

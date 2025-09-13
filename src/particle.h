@@ -25,4 +25,7 @@ Vec2 gravitational_force_between(Particle p1, Particle p2);
 
 void add_curr_pos_to_old_positions(Particle* p);
 
+
+void clamp_velocity(Particle* p);
+
 #endif

@@ -27,6 +27,7 @@ int main() {
     Color c = new_color(255, 0, 0);
     Color c2 = new_color(0, 255, 0);
     Color c3 = new_color(0, 0, 255);
+    Color white = new_color(255, 255, 255);
 
     Particle p = new_particle(120, 100, c);
     Particle p2 = new_particle(150, 100, c2);
@@ -36,6 +37,10 @@ int main() {
     Particle p5 = new_particle(200, 300, c2);
     Particle p6 = new_particle(250, 250, c3);
 
+    Particle heavy_particle = new_particle(300, 300, white);
+    heavy_particle.mass *= 100;
+    heavy_particle.velocity.y = 5;
+
     add_particle(ps, p);
     add_particle(ps, p2);
     add_particle(ps, p3);
@@ -43,6 +48,7 @@ int main() {
     add_particle(ps, p4);
     add_particle(ps, p5);
     add_particle(ps, p6);
+    add_particle(ps, heavy_particle);
     // Lagrange equilateral configuration
 
     // int overlapping_frames = 7;
