@@ -3,6 +3,8 @@
 #include "color.h"
 #include "particlesystem.h"
 #include "image.h"
+#include "constants.h"
+#include "ffmpeg_macro.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,18 +13,9 @@
 // Todo: add black and white holes
 // black hole eats any particles that come close enough and spit them out at the white hole in randomized dir.
 
-int main() {
+Particlesystem* init_particlesystem() {
 
     Particlesystem* ps = new_particlesystem();
-
-    FILE* ffmpeg = popen("ffmpeg -f rawvideo "
-                                "-pixel_format rgb24 "
-                                "-video_size 640x480 "
-                                "-framerate 30 "
-                                "-i - -c:v libx264 "
-                                "-pix_fmt yuv420p "
-                                "videos/lagrange.mp4"
-                        , "w");
 
     Color c = new_color(255, 0, 0);
     Color c2 = new_color(0, 255, 0);
@@ -49,17 +42,23 @@ int main() {
     add_particle(ps, p5);
     add_particle(ps, p6);
     add_particle(ps, heavy_particle);
-    // Lagrange equilateral configuration
 
-    // int overlapping_frames = 7;
-    int width = 640;
-    int height = 480;
+    return ps;
 
-    // populate the image fifoqueue with
+}
+
+int main() {
+    // configure in constants.h and init_particlesystem
+
+    Particlesystem* ps = init_particlesystem();
+
+    FILE* ffmpeg = popen(FFMPEG_CMD, "w");
+
     for (int i = 0; i < 660; i++) {
-        Image img = new_image(width, height);
+        Image img = new_image(WIDTH, HEIGHT);
         tick(ps, img);
 
+        // uncomment this to write each frame to a ppm file
         // char filename[100];
         // snprintf(filename, sizeof(filename), "images/frame%d.ppm", i);
         // write_to_ppm_file(fopen(filename, "wb"), img);
