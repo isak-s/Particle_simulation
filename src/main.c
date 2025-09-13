@@ -48,11 +48,10 @@ int main() {
     // int overlapping_frames = 7;
     int width = 640;
     int height = 480;
-    Image img = new_image(width, height);
 
     // populate the image fifoqueue with
     for (int i = 0; i < 660; i++) {
-        // img = new_image(255, 255);
+        Image img = new_image(width, height);
         tick(ps, img);
 
         // char filename[100];
@@ -60,15 +59,12 @@ int main() {
         // write_to_ppm_file(fopen(filename, "wb"), img);
 
         write_to_file(ffmpeg, img);
+        free_image(img);
     }
 
     pclose(ffmpeg);
 
-    // write_to_file(fopen("images/multiple.ppm", "wb"), img);
-
     free_particlesystem(ps);
-    free_image(img);
-
 
     return 0;
 }

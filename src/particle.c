@@ -12,6 +12,7 @@ Particle new_particle(double x, double y, Color c) {
     p.mass = 1000000;
     p.velocity.x = 0;
     p.velocity.y = 0;
+    p.history_index = 0;
     return p;
 }
 
@@ -47,4 +48,9 @@ Vec2 gravitational_force_between(Particle p1, Particle p2) {
 
     return nv;
 
+}
+
+void add_curr_pos_to_old_positions(Particle* p) {
+    p->old_positions[p->history_index] = p->pos;
+    p->history_index = (p->history_index + 1) % NUM_OLD_POSITIONS;
 }

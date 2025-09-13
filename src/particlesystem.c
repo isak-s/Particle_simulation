@@ -1,6 +1,7 @@
 #include "particlesystem.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include "constants.h"
 
 Particlesystem* new_particlesystem() {
     Particlesystem* ps = malloc(sizeof(Particlesystem));
@@ -36,18 +37,26 @@ void free_particlesystem(Particlesystem* ps) {
     free(ps);
 }
 
-void draw_particle(Particle p, Image img) {
-    //if (p.x >= img.width || p.y >= img.height || p.x <= 0 || p.y <= 0) {
-    //    return;
-    //}
-    img.pixels[((int) p.pos.y) * img.width + (int)p.pos.x] = p.color;
+void draw_particle(Particle* p, Image img) {
+
+    img.pixels[((int) p->pos.y) * img.width + (int)p->pos.x] = p->color;
+}
+
+void draw_old_particle_positions(Particle* p, Image img) {
+
+    for (int i = 0; i < NUM_OLD_POSITIONS; i++) {
+        int x = p->old_positions[i].x;
+        int y = p->old_positions[i].y;
+        img.pixels[((int) y) * img.width + (int) x] = p->color;
+    }
 }
 
 void draw_particles(Particlesystem* ps, Image img) {
     ParticleNode* curr = ps->firstP;
 
     while (curr != NULL) {
-        draw_particle(curr->p, img);
+        draw_particle(&curr->p, img);
+        draw_old_particle_positions(&curr->p, img);
         curr = curr->next;
     }
 }
@@ -129,8 +138,17 @@ void boundary_check(Particlesystem* ps, Image img) {
     }
 
 }
+void update_old_positions(Particlesystem* ps) {
+    ParticleNode* curr = ps->firstP;
+
+    while (curr != NULL) {
+        add_curr_pos_to_old_positions(&curr->p);
+        curr = curr->next;
+    }
+}
 
 void tick(Particlesystem* ps, Image img) {
+    update_old_positions(ps);
     update_acceleration(ps);
     apply_acceleration(ps);
     apply_velocity(ps);

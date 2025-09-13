@@ -5,7 +5,7 @@
 
 Image new_image(int width, int height) {
     Image img;
-    img.pixels = malloc(height * width * sizeof(Color));
+    img.pixels = calloc(height * width, sizeof(Color));
     img.height = height;
     img.width = width;
     return img;
