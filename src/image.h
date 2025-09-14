@@ -13,9 +13,11 @@ typedef struct {
 
 Image new_image(int width, int height);
 
-void write_to_file(FILE* file, Image img);
+void draw_pixel(Image* img, int x, int y, Color color);
+
+void write_to_file(FILE* file, Image* img);
 
 void write_to_ppm_file(FILE* file, Image img);
 
-void free_image(Image img);
+void free_image(Image* img);
 #endif

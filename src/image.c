@@ -12,12 +12,12 @@ Image new_image(int width, int height) {
 }
 
 
-void free_image(Image img) {
-    free(img.pixels);
+void free_image(Image* img) {
+    free(img->pixels);
 }
 
-void write_to_file(FILE* file, Image img) {
-    fwrite(img.pixels, sizeof(Color), img.width * img.height, file);
+void write_to_file(FILE* file, Image* img) {
+    fwrite(img->pixels, sizeof(Color), img->width * img->height, file);
 }
 
 void write_to_ppm_file(FILE* file, Image img) {
@@ -25,12 +25,12 @@ void write_to_ppm_file(FILE* file, Image img) {
     fwrite(img.pixels, sizeof(Color), img.width * img.height, file);
 }
 
-void write_bitmap_to_file(char* filename, Color* image, int width, int height) {
+void write_bitmap_to_file(char* filename, Color* pixels, int width, int height) {
 
     FILE* f = fopen(filename, "wb");
 
     fprintf(f, "P6\n%d %d\n255\n", width, height);
-    fwrite(image, sizeof(Color), width * height, f);
+    fwrite(pixels, sizeof(Color), width * height, f);
     fclose(f);
 }
 
@@ -48,4 +48,8 @@ void write_gradient_to_file(char* filename, int width, int height) {
     write_bitmap_to_file(filename, image, width, height);
 
    free(image);
+}
+
+void draw_pixel(Image* img, int x, int y, Color color) {
+    img->pixels[((int) y) * img->width + (int) x] = color;
 }

@@ -33,6 +33,7 @@ Particlesystem* init_particlesystem() {
     Particle heavy_particle = new_particle(300, 300, white);
     heavy_particle.mass *= 100;
     heavy_particle.velocity.y = 5;
+    heavy_particle.move_randomly = 1;
 
     add_particle(ps, p);
     add_particle(ps, p2);
@@ -56,15 +57,15 @@ int main() {
 
     for (int i = 0; i < 660; i++) {
         Image img = new_image(WIDTH, HEIGHT);
-        tick(ps, img);
+        tick(ps, &img);
 
         // uncomment this to write each frame to a ppm file
         // char filename[100];
         // snprintf(filename, sizeof(filename), "images/frame%d.ppm", i);
         // write_to_ppm_file(fopen(filename, "wb"), img);
 
-        write_to_file(ffmpeg, img);
-        free_image(img);
+        write_to_file(ffmpeg, &img);
+        free_image(&img);
     }
 
     pclose(ffmpeg);

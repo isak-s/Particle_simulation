@@ -37,21 +37,20 @@ void free_particlesystem(Particlesystem* ps) {
     free(ps);
 }
 
-void draw_particle(Particle* p, Image img) {
-
-    img.pixels[((int) p->pos.y) * img.width + (int)p->pos.x] = p->color;
+void draw_particle(Particle* p, Image* img) {
+    draw_pixel(img, p->pos.x, p->pos.y, p->color);
 }
 
-void draw_old_particle_positions(Particle* p, Image img) {
+void draw_old_particle_positions(Particle* p, Image* img) {
 
     for (int i = 0; i < NUM_OLD_POSITIONS; i++) {
         int x = p->old_positions[i].x;
         int y = p->old_positions[i].y;
-        img.pixels[((int) y) * img.width + (int) x] = p->color;
+        draw_pixel(img, x, y, p->color);
     }
 }
 
-void draw_particles(Particlesystem* ps, Image img) {
+void draw_particles(Particlesystem* ps, Image* img) {
     ParticleNode* curr = ps->firstP;
 
     while (curr != NULL) {
@@ -98,9 +97,13 @@ void apply_acceleration(Particlesystem* ps) {
     // simulate some variable amount of time to apply acceleration and update location of particles.
     ParticleNode* curr = ps->firstP;
     while (curr != NULL) {
-        curr->p.velocity.x += curr->p.acceleration.x;
-        curr->p.velocity.y += curr->p.acceleration.y;
-
+        if (curr->p.move_randomly) {
+            curr->p.velocity.x += (rand() % (MAX_VELOCITY) - (rand() % MAX_VELOCITY));
+            curr->p.velocity.y += (rand() % (MAX_VELOCITY) - (rand() % MAX_VELOCITY));
+        } else {
+            curr->p.velocity.x += curr->p.acceleration.x;
+            curr->p.velocity.y += curr->p.acceleration.y;
+        }
         clamp_velocity(&curr->p);
 
         curr = curr->next;
@@ -121,11 +124,11 @@ void apply_velocity(Particlesystem* ps) {
 }
 
 
-int particle_is_within_image(Particle p, Image img) {
-    return p.pos.x <= img.width && p.pos.x >= 0 && p.pos.y <= img.height && p.pos.y >= 0;
+int particle_is_within_image(Particle p, Image* img) {
+    return p.pos.x <= img->width && p.pos.x >= 0 && p.pos.y <= img->height && p.pos.y >= 0;
 }
 
-void boundary_check(Particlesystem* ps, Image img) {
+void boundary_check(Particlesystem* ps, Image* img) {
     // if the particle is outside of the image dimensions,
     // snap it back to the edge and reverse the direction of the velocity.
 
@@ -134,9 +137,9 @@ void boundary_check(Particlesystem* ps, Image img) {
     while (curr != NULL) {
         if (!particle_is_within_image(curr->p, img)) {
             if (curr->p.pos.x < 0) { curr->p.pos.x = 0; curr->p.velocity.x = -curr->p.velocity.x; }
-            if (curr->p.pos.x >= img.width) { curr->p.pos.x = img.width - 1; curr->p.velocity.x = -curr->p.velocity.x; }
+            if (curr->p.pos.x >= img->width) { curr->p.pos.x = img->width - 1; curr->p.velocity.x = -curr->p.velocity.x; }
             if (curr->p.pos.y < 0) { curr->p.pos.y = 0; curr->p.velocity.y = -curr->p.velocity.y; }
-            if (curr->p.pos.y >= img.height) { curr->p.pos.y = img.height - 1; curr->p.velocity.y = -curr->p.velocity.y; }
+            if (curr->p.pos.y >= img->height) { curr->p.pos.y = img->height - 1; curr->p.velocity.y = -curr->p.velocity.y; }
         }
         curr = curr->next;
     }
@@ -151,7 +154,7 @@ void update_old_positions(Particlesystem* ps) {
     }
 }
 
-void tick(Particlesystem* ps, Image img) {
+void tick(Particlesystem* ps, Image* img) {
     update_old_positions(ps);
     update_acceleration(ps);
     apply_acceleration(ps);

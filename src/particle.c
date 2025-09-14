@@ -13,6 +13,7 @@ Particle new_particle(double x, double y, Color c) {
     p.velocity.x = 0;
     p.velocity.y = 0;
     p.history_index = 0;
+    p.move_randomly = 0;
     return p;
 }
 

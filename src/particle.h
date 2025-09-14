@@ -17,6 +17,8 @@ typedef struct Particle {
     double mass; // in kg
     Color color;
 
+    int move_randomly;
+
 } Particle;
 
 Particle new_particle(double x, double y, Color c);
