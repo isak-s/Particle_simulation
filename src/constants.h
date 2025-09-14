@@ -6,4 +6,5 @@
 #define HEIGHT 480
 #define OUTPUT_FILE "videos/lagrange.mp4"
 #define FRAMERATE 30
+#define dt (1.0f / FRAMERATE)
 #endif

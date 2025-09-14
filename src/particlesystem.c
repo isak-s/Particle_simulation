@@ -111,13 +111,10 @@ void apply_acceleration(Particlesystem* ps) {
 }
 
 void apply_velocity(Particlesystem* ps) {
-    // simulate some variable amount of time to apply acceleration and update location of particles.
-    // add some randomness??!!
-    double coefficient = 0.1;
     ParticleNode* curr = ps->firstP;
     while (curr != NULL) {
-        curr->p.pos.x += coefficient * curr->p.velocity.x;
-        curr->p.pos.y += coefficient * curr->p.velocity.y;
+        curr->p.pos.x += dt * curr->p.velocity.x;
+        curr->p.pos.y += dt * curr->p.velocity.y;
         clamp_velocity(&curr->p);
         curr = curr->next;
     }
