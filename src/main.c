@@ -17,23 +17,35 @@ Particlesystem* init_particlesystem() {
 
     Particlesystem* ps = new_particlesystem();
 
-    Color c = new_color(255, 0, 0);
-    Color c2 = new_color(0, 255, 0);
-    Color c3 = new_color(0, 0, 255);
+    Color red = new_color(255, 0, 0);
+    // Color green = new_color(0, 255, 0);
+    Color blue = new_color(0, 0, 255);
     Color white = new_color(255, 255, 255);
+    // Color pink = new_color(255, 192, 203);
 
-    Particle p = new_particle(120, 100, c);
-    Particle p2 = new_particle(150, 100, c2);
-    Particle p3 = new_particle(100, 150, c3);
+    Particle p = new_particle(120, 100, blue);
+    Particle p2 = new_particle(150, 100, blue);
+    Particle p3 = new_particle(100, 150, blue);
 
-    Particle p4 = new_particle(200, 200, c);
-    Particle p5 = new_particle(200, 300, c2);
-    Particle p6 = new_particle(250, 250, c3);
+    Particle p4 = new_particle(200, 200, blue);
+    Particle p5 = new_particle(200, 300, blue);
+    Particle p6 = new_particle(250, 250, blue);
 
-    Particle heavy_particle = new_particle(300, 300, white);
-    heavy_particle.mass *= 100;
-    heavy_particle.velocity.y = 5;
-    heavy_particle.move_randomly = 1;
+    for (int i = 0; i < 100; i++) {
+        int x = rand() % WIDTH;
+        int y = rand() & HEIGHT;
+        add_particle(ps, new_particle(x, y, blue));
+    }
+
+    Particle black_hole = new_particle(300, 300, red);
+    black_hole.mass *= 1000;
+    black_hole.move_randomly = 1;
+    add_black_hole(ps, black_hole);
+
+    Particle white_hole = new_particle(400, 100, white);
+    white_hole.mass = 1;
+    white_hole.move_randomly = 1;
+    add_white_hole(ps, white_hole);
 
     add_particle(ps, p);
     add_particle(ps, p2);
@@ -42,7 +54,6 @@ Particlesystem* init_particlesystem() {
     add_particle(ps, p4);
     add_particle(ps, p5);
     add_particle(ps, p6);
-    add_particle(ps, heavy_particle);
 
     return ps;
 

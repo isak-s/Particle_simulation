@@ -13,11 +13,16 @@ typedef struct Particlesystem
     ParticleNode* firstP;
     ParticleNode* lastP;
 
+    Particle* black_hole;
+    Particle* white_hole;
+
 } Particlesystem;
 
 Particlesystem* new_particlesystem();
 
 void add_particle(Particlesystem* ps, Particle p);
+void add_black_hole(Particlesystem* ps, Particle black_hole);
+void add_white_hole(Particlesystem* ps, Particle white_hole);
 
 void free_particlesystem(Particlesystem* ps);
 

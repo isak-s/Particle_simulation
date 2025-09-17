@@ -7,4 +7,6 @@
 #define OUTPUT_FILE "videos/lagrange.mp4"
 #define FRAMERATE 30
 #define dt (1.0f / FRAMERATE)
+#define SPEEDUP_COEFFICIENT 2
+#define COLLISION_RADIUS 9.0f
 #endif

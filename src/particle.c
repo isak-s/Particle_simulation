@@ -33,7 +33,7 @@ Vec2 normalized_vec2(Vec2 v) {
 
 double magnitude_gravitational_force_between(Particle p1, Particle p2) {
     double d = distance_between(p1, p2);
-    if (d < 0.000001) {return 1;}
+    if (d < 0.000001) {return MAX_VELOCITY;}
     return (G * p1.mass * p2.mass) /
             pow(d * METERS_PER_PIXEL, 2);
 }
