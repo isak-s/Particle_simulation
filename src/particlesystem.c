@@ -170,7 +170,7 @@ void handle_collisions(Particlesystem* ps) {
     ParticleNode* curr = ps->firstP;
     while (curr != NULL) {
         if (collides_with_black_hole(ps, &curr->p)) {
-            printf("collision!\n");
+            // printf("collision!\n");
             curr->p.pos.x = ps->white_hole->pos.x;
             curr->p.pos.y = ps->white_hole->pos.y;
         }

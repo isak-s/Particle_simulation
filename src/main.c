@@ -31,14 +31,14 @@ Particlesystem* init_particlesystem() {
     Particle p5 = new_particle(200, 300, blue);
     Particle p6 = new_particle(250, 250, blue);
 
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 160; i++) {
         int x = rand() % WIDTH;
         int y = rand() & HEIGHT;
         add_particle(ps, new_particle(x, y, blue));
     }
 
     Particle black_hole = new_particle(300, 300, red);
-    black_hole.mass *= 1000;
+    black_hole.mass *= 1000000;
     black_hole.move_randomly = 1;
     add_black_hole(ps, black_hole);
 
@@ -66,7 +66,7 @@ int main() {
 
     FILE* ffmpeg = popen(FFMPEG_CMD, "w");
 
-    for (int i = 0; i < 660; i++) {
+    for (int i = 0; i < 60*FRAMERATE; i++) {
         Image img = new_image(WIDTH, HEIGHT);
         tick(ps, &img);
 

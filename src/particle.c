@@ -9,7 +9,7 @@ Particle new_particle(double x, double y, Color c) {
     p.pos.x = x;
     p.pos.y = y;
     p.color = c;
-    p.mass = 1000000;
+    p.mass = 100000; //1000000;
     p.velocity.x = 0;
     p.velocity.y = 0;
     p.history_index = 0;
