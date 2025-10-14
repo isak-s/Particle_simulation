@@ -30,7 +30,7 @@ Particlesystem* init_particlesystem() {
     Particle p4 = new_particle(200, 200, blue);
     Particle p5 = new_particle(200, 300, blue);
     Particle p6 = new_particle(250, 250, blue);
-
+    // does weird stuff at above 160 particles atm
     for (int i = 0; i < 160; i++) {
         int x = rand() % WIDTH;
         int y = rand() & HEIGHT;
@@ -66,8 +66,8 @@ int main() {
 
     FILE* ffmpeg = popen(FFMPEG_CMD, "w");
 
+    Image img = new_image(WIDTH, HEIGHT);
     for (int i = 0; i < 60*FRAMERATE; i++) {
-        Image img = new_image(WIDTH, HEIGHT);
         tick(ps, &img);
 
         // uncomment this to write each frame to a ppm file
@@ -76,8 +76,10 @@ int main() {
         // write_to_ppm_file(fopen(filename, "wb"), img);
 
         write_to_file(ffmpeg, &img);
-        free_image(&img);
+        reset_image(&img);
     }
+
+    free_image(&img);
 
     pclose(ffmpeg);
 

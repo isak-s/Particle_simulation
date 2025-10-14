@@ -16,6 +16,14 @@ void free_image(Image* img) {
     free(img->pixels);
 }
 
+void reset_image(Image* img) {
+    for(Color* i = img->pixels; i < img->pixels + img->height*img->width; i++) {
+        i->r = 0;
+        i->b = 0;
+        i->g = 0;
+    }
+}
+
 void write_to_file(FILE* file, Image* img) {
     fwrite(img->pixels, sizeof(Color), img->width * img->height, file);
 }

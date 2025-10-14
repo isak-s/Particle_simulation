@@ -20,4 +20,7 @@ void write_to_file(FILE* file, Image* img);
 void write_to_ppm_file(FILE* file, Image img);
 
 void free_image(Image* img);
+
+void reset_image(Image* img);
+
 #endif
