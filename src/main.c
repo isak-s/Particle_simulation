@@ -31,9 +31,9 @@ Particlesystem* init_particlesystem() {
     Particle p5 = new_particle(200, 300, blue);
     Particle p6 = new_particle(250, 250, blue);
     // does weird stuff at above 160 particles atm
-    for (int i = 0; i < 160; i++) {
-        int x = rand() % WIDTH;
-        int y = rand() & HEIGHT;
+    for (int i = 0; i < 200; i++) {
+        int x = rand() % (WIDTH-1);
+        int y = rand() % (HEIGHT-1);
         add_particle(ps, new_particle(x, y, blue));
     }
 
