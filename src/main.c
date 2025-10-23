@@ -10,6 +10,8 @@
 #include <stdlib.h>
 #include <math.h>
 
+#include <time.h>
+
 // Todo: add black and white holes
 // black hole eats any particles that come close enough and spit them out at the white hole in randomized dir.
 
@@ -61,6 +63,8 @@ Particlesystem* init_particlesystem() {
 
 int main() {
     // configure in constants.h and init_particlesystem
+
+    srand(time(NULL));
 
     Particlesystem* ps = init_particlesystem();
 
